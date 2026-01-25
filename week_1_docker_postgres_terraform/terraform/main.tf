@@ -10,15 +10,15 @@ terraform {
 provider "google" {
   credentials = file("./keys/my_cred.json")
   project     = "starry-arbor-485309-r2"
-  region      = "australia-southeast1"
+  region      = var.location
 }
 
 resource "google_storage_bucket" "demo-bucket" {
-  name          = "starry-arbor-485309-r2-terra-bucket"
-  location      = "AUSTRALIA-SOUTHEAST1"
+  name          = var.gcs_bucket_name
+  location      = var.location
   force_destroy = true
-  
-  uniform_bucket_level_access = true  # Changed from block to argument
+
+  uniform_bucket_level_access = true # Changed from block to argument
 
   lifecycle_rule {
     condition {
@@ -28,4 +28,9 @@ resource "google_storage_bucket" "demo-bucket" {
       type = "AbortIncompleteMultipartUpload"
     }
   }
+}
+
+resource "google_bigquery_dataset" "demo_dataset" {
+  dataset_id = var.bq_dataset_name
+  location = var.location
 }
