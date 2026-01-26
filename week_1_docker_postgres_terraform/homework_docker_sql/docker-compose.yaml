@@ -1,29 +1,54 @@
+version: '3.9'
+
 services:
-  db:
-    container_name: postgres
-    image: postgres:17-alpine
+  pg-database:
+    image: postgres:16
+    container_name: pg-database
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
-      POSTGRES_DB: 'ny_taxi'
-    ports:
-      - '5433:5432'
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: green_taxi
     volumes:
-      - vol-pgdata:/var/lib/postgresql/data
+      - green_taxi_postgres_data:/var/lib/postgresql/data
+    networks:
+      - taxi-network
+
+  homework_ingest:
+    image: homework_ingest:v1
+    container_name: homework_ingest
+    depends_on:
+      - pg-database
+    networks:
+      - taxi-network
+    command: >
+      --pg-user=root
+      --pg-pass=root
+      --pg-host=pg-database
+      --pg-port=5432
+      --pg-database=green_taxi
+      --year=2025
+      --month=11
+      --pg-batch-size=10000
 
   pgadmin:
+    image: dpage/pgadmin4
     container_name: pgadmin
-    image: dpage/pgadmin4:latest
+    restart: unless-stopped
     environment:
-      PGADMIN_DEFAULT_EMAIL: "pgadmin@pgadmin.com"
-      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
-    ports:
-      - "8080:80"
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
     volumes:
-      - vol-pgadmin_data:/var/lib/pgadmin
+      - pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "8085:80"
+    networks:
+      - taxi-network
 
 volumes:
-  vol-pgdata:
-    name: vol-pgdata
-  vol-pgadmin_data:
-    name: vol-pgadmin_data
+  green_taxi_postgres_data:
+  pgadmin_data:
+
+networks:
+  taxi-network:
+    driver: bridge
