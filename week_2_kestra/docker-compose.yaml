@@ -17,6 +17,7 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    
 
   pgadmin:
     image: dpage/pgadmin4
@@ -69,6 +70,8 @@ services:
       - pg-network
 
   kestra:
+    env_file:
+      - .env
     image: kestra/kestra:v1.1
     pull_policy: always
     user: "root"
@@ -78,6 +81,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp/kestra-wd:/tmp/kestra-wd
     environment:
+      SECRET_MYSECRETK: ${SECRET_MYSECRETK}
+
       KESTRA_CONFIGURATION: |
         datasources:
           postgres:
@@ -98,6 +103,11 @@ services:
               basePath: "/app/storage"
           queue:
             type: postgres
+          ai:
+            type: gemini
+            gemini:
+              model-name: gemini-2.5-flash
+              api-key: ${GEMINI_API_KEY}
           tasks:
             tmpDir:
               path: /tmp/kestra-wd/tmp
