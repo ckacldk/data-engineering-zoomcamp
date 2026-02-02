@@ -138,4 +138,4 @@ Kestra uses `Etc/UTC` timezone by default. To configure a different timezone:
 2. According to the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), New York uses the identifier: `America/New_York`
 3. This timezone identifier should be used in the Schedule trigger configuration
 
-**Answer:** Add a timezone property set to America/New_York in the Schedule trigger configuration
+**Answer:** Add a timezone property set to America/New_York in the Schedule trigger configuration.
