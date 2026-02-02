@@ -82,7 +82,6 @@ services:
       - /tmp/kestra-wd:/tmp/kestra-wd
     environment:
       SECRET_MYSECRETK: ${SECRET_MYSECRETK}
-
       KESTRA_CONFIGURATION: |
         datasources:
           postgres:
