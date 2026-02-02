@@ -17,6 +17,7 @@
 3. Convert bytes to MiB: `134,481,400 bytes ÷ 1,048,576 = 128.251 MiB`
 
 **Answer:** 128.3 MiB
+<img width="1270" height="630" alt="A kestra" src="https://github.com/user-attachments/assets/c09a6d3c-b8ed-41db-80fa-c7d3e75183a6" />
 
 ---
 
@@ -118,6 +119,9 @@ WHERE table_id LIKE 'green_tripdata_2020%'
 
 **Answer:** 1,925,152
 
+<img width="672" height="637" alt="go kestra-sandbox102030  Datasets  200mcamp  Tables  yellow _tripdata_2021_03" src="https://github.com/user-attachments/assets/af89bfc5-4736-4ae3-b851-ee5a71f9277c" />
+
+
 ---
 
 ## Q6 Solution
@@ -133,6 +137,7 @@ WHERE table_id LIKE 'green_tripdata_2020%'
 **Explanation:**
 
 Kestra uses `Etc/UTC` timezone by default. To configure a different timezone:
+<img width="570" height="175" alt="timezone $" src="https://github.com/user-attachments/assets/1167752f-bb01-4692-ab74-bc168cf3dbf4" />
 
 1. Kestra documentation references the IANA timezone database
 2. According to the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), New York uses the identifier: `America/New_York`
