@@ -39,9 +39,7 @@ FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_external`;
 
 ---
 
-## Q2: Estimated Data Read - External vs Materialized Table
-
-**Question:** Write a query to count the distinct number of PULocationIDs for the entire dataset on both the tables. What is the estimated amount of data that will be read when this query is executed on the External Table and the Table?
+## Q2: Write a query to count the distinct number of PULocationIDs for the entire dataset on both the tables. What is the estimated amount of data that will be read when this query is executed on the External Table and the Table?
 
 **Options:**
 - 18.82 MB for the External Table and 47.60 MB for the Materialized Table
@@ -66,9 +64,7 @@ FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_external`;
 
 ---
 
-## Q3: Columnar Database Byte Differences
-
-**Question:** Write a query to retrieve the PULocationID from the table (not the external table) in BigQuery. Now write a query to retrieve the PULocationID and DOLocationID on the same table. Why are the estimated number of Bytes different?
+## Q3: Write a query to retrieve the PULocationID from the table (not the external table) in BigQuery. Now write a query to retrieve the PULocationID and DOLocationID on the same table. Why are the estimated number of Bytes different?
 
 **Options:**
 - **BigQuery is a columnar database, and it only scans the specific columns requested in the query. Querying two columns (PULocationID, DOLocationID) requires reading more data than querying one column (PULocationID), leading to a higher estimated number of bytes processed.** ✅
@@ -101,9 +97,7 @@ BigQuery stores data in a columnar format, meaning:
 
 ---
 
-## Q4: Records with Zero Fare Amount
-
-**Question:** How many records have a fare_amount of 0?
+## Q4: How many records have a fare_amount of 0?
 
 **Options:**
 - 128,210
@@ -123,9 +117,7 @@ WHERE fare_amount = 0;
 
 ---
 
-## Q5: Optimized Table Strategy - Partitioning and Clustering
-
-**Question:** What is the best strategy to make an optimized table in BigQuery if your query will always filter based on tpep_dropoff_datetime and order the results by VendorID?
+## Q5: What is the best strategy to make an optimized table in BigQuery if your query will always filter based on tpep_dropoff_datetime and order the results by VendorID?
 
 **Options:**
 - **Partition by tpep_dropoff_datetime and Cluster on VendorID** ✅
@@ -154,9 +146,7 @@ SELECT * FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_native`
 
 ---
 
-## Q6: Partitioned vs Non-Partitioned Table Performance
-
-**Question:** Write a query to retrieve the distinct VendorIDs between tpep_dropoff_datetime 2024-03-01 and 2024-03-15 (inclusive). Use the materialized table you created earlier in your from clause and note the estimated bytes. Now change the table in the from clause to the partitioned table you created for question 5 and note the estimated bytes processed. What are these values?
+## Q6: Write a query to retrieve the distinct VendorIDs between tpep_dropoff_datetime 2024-03-01 and 2024-03-15 (inclusive). Use the materialized table you created earlier in your from clause and note the estimated bytes. Now change the table in the from clause to the partitioned table you created for question 5 and note the estimated bytes processed. What are these values?
 
 **Options:**
 - 12.47 MB for non-partitioned table and 326.42 MB for the partitioned table
@@ -176,11 +166,9 @@ WHERE tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15';
 **Query 2: Partitioned Table**
 ```sql
 SELECT DISTINCT VendorID
-FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_optimized`
+FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_external`
 WHERE tpep_dropoff_datetime BETWEEN '2024-03-01' AND '2024-03-15';
 ```
-
-Check **Job Information → Bytes processed** for both queries.
 
 ### Key Insight:
 - **Non-partitioned table**: Must scan the ENTIRE table → ~310 MB
@@ -191,9 +179,7 @@ Check **Job Information → Bytes processed** for both queries.
 
 ---
 
-## Q7: External Table Data Storage Location
-
-**Question:** Where is the data stored in the External Table you created?
+## Q7: Where is the data stored in the External Table you created?
 
 **Options:**
 - Big Query
@@ -216,9 +202,7 @@ Check **Job Information → Bytes processed** for both queries.
 
 ---
 
-## Q8: Clustering Best Practice
-
-**Question:** It is best practice in BigQuery to always cluster your data:
+## Q8: It is best practice in BigQuery to always cluster your data:
 
 **Options:**
 - True
@@ -241,9 +225,7 @@ Check **Job Information → Bytes processed** for both queries.
 
 ---
 
-## Q9: COUNT(*) Bytes Processed
-
-**Question:** Write a `SELECT count(*)` query FROM the materialized table you created. How many bytes does it estimate will be read? Why?
+## Q9: Write a `SELECT count(*)` query FROM the materialized table you created. How many bytes does it estimate will be read? Why?
 
 ### Solution:
 
@@ -271,13 +253,3 @@ When you run `COUNT(*)` (without a WHERE clause):
 
 **Answer: 0 Bytes**
 
----
-
-## Summary
-
-This homework demonstrates key BigQuery concepts:
-1. External vs Native tables
-2. Columnar storage and query optimization
-3. Partitioning and clustering strategies
-4. Query performance analysis
-5. Metadata-based query optimization
