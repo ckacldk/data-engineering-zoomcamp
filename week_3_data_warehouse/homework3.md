@@ -62,10 +62,7 @@ FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_native`;
 SELECT COUNT(DISTINCT PULocationID)  
 FROM `dk-datawarehouse-zoomcamp.yellow_taxi_dataset.yellow_taxi_external`;
 ```
-
-Check the **Job Information** tab → **Bytes processed** for each query.
-
-**Answer: 18.82 MB for the External Table and 47.60 MB for the Materialized Table**
+**Answer: 0 MB for the External Table and 155.12 MB for the Materialized Table**
 
 ---
 
